@@ -89,7 +89,7 @@ export class DemoComponent {
       },
       periods: [
         // { dateFrom: '2021-01-05', dateTo: '2021-01-08' },
-        // { dateFrom: '2021-01-18', dateTo: '2021-01-24' },
+        { dateFrom: '2021-01-18', dateTo: '2021-01-24' },
       ],
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),

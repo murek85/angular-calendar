@@ -403,7 +403,7 @@ export class CalendarMonthViewComponent
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
-        delete day.cssClass;
+        delete day.periods;
         delete day.backgroundColor;
       }
     });
@@ -423,11 +423,11 @@ export class CalendarMonthViewComponent
             )
           ) {
             if (day.events.indexOf(event) > -1) {
-              day.cssClass = 'bg-periods';
+              day.periods = true;
             }
 
             if (day.events.indexOf(event) < 0) {
-              day.cssClass = 'bg-periods';
+              day.periods = true;
               day.backgroundColor =
                 (event.color && event.color.third) || '#D1E8FF';
             }
@@ -455,7 +455,7 @@ export class CalendarMonthViewComponent
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
-        delete day.cssClass;
+        delete day.periods;
         delete day.backgroundColor;
       }
 
@@ -471,11 +471,11 @@ export class CalendarMonthViewComponent
             )
           ) {
             if (day.events.indexOf(event) > -1) {
-              day.cssClass = 'bg-periods';
+              day.periods = true;
             }
 
             if (day.events.indexOf(event) < 0) {
-              day.cssClass = 'bg-periods';
+              day.periods = true;
               day.backgroundColor =
                 (event.color && event.color.third) || '#D1E8FF';
             }

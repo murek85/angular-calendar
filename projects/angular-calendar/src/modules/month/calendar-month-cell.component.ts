@@ -34,6 +34,9 @@ import { PlacementArray } from 'positioning';
         "
       >
         <span aria-hidden="true">
+          <span class="cal-day-periods">
+            <i class="fas fa-clock" *ngIf="day.periods"></i>
+          </span>
           <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
             day.badgeTotal
           }}</span>
