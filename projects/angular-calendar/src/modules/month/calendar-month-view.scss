@@ -7,11 +7,15 @@ $cal-month-view-vars: map-merge($cal-vars, $cal-month-view-vars);
   $theme: map-merge($cal-month-view-vars, $overrides);
 
   .cal-month-view {
+    .bg-periods {
+      float: right;
+    }
+
     .bg-periods:before {
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
       content: '\f017';
-      position: fixed;
+      position: absolute;
       padding: 0.25em;
     }
 
@@ -128,7 +132,7 @@ $cal-month-view-vars: map-merge($cal-vars, $cal-month-view-vars);
 
   .cal-day-badge {
     margin-top: 18px;
-    margin-left: 10px;
+    margin-left: 18px;
     display: inline-block;
     min-width: 10px;
     padding: 3px 7px;

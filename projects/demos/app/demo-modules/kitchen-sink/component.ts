@@ -86,11 +86,11 @@ export class DemoComponent {
       eventTimetable: {
         startTime: subDays(startOfDay(new Date()), 1),
         endTime: addDays(new Date(), 1),
-        realizationPeriods: [
-          { dateFrom: '2021-01-05', dateTo: '2021-01-08' },
-          { dateFrom: '2021-01-18', dateTo: '2021-01-24' },
-        ],
       },
+      periods: [
+        // { dateFrom: '2021-01-05', dateTo: '2021-01-08' },
+        { dateFrom: '2021-01-18', dateTo: '2021-01-24' },
+      ],
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
       title: 'A 3 day event',

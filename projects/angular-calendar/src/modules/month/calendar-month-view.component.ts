@@ -400,7 +400,6 @@ export class CalendarMonthViewComponent
   toggleDayHighlight(event: CalendarEvent, isHighlighted: boolean): void {
     this.view.days.forEach((day) => {
       if (isHighlighted && day.events.indexOf(event) > -1) {
-        day.cssClass = 'bg-periods';
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
@@ -412,8 +411,8 @@ export class CalendarMonthViewComponent
 
   togglePeriodsHighlight(event: any, isHighlighted: boolean): void {
     this.view.days.forEach((day) => {
-      if (event.eventTimetable.realizationPeriods) {
-        event.eventTimetable.realizationPeriods.forEach((period) => {
+      if (event.periods) {
+        event.periods.forEach((period) => {
           if (
             isHighlighted &&
             moment(day.date).isBetween(
@@ -423,6 +422,10 @@ export class CalendarMonthViewComponent
               '[]'
             )
           ) {
+            if (day.events.indexOf(event) > -1) {
+              day.cssClass = 'bg-periods';
+            }
+
             if (day.events.indexOf(event) < 0) {
               day.cssClass = 'bg-periods';
               day.backgroundColor =
@@ -457,8 +460,8 @@ export class CalendarMonthViewComponent
         delete day.backgroundColor;
       }
 
-      if (event.eventTimetable.realizationPeriods) {
-        event.eventTimetable.realizationPeriods.forEach((period) => {
+      if (event.periods) {
+        event.periods.forEach((period) => {
           if (
             isHighlighted &&
             moment(day.date).isBetween(
