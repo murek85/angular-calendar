@@ -6,7 +6,7 @@
     "url": "https://github.com/sponsors/mattlewis92"
   },
   "scripts": {
-    "start": "node --max_old_space_size=8192 ./node_modules/.bin/ng serve --open",
+    "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve --open --port 4203",
     "build:copy-package-json": "copyfiles package.json projects/angular-calendar & copyfiles package.json projects/angular-calendar/schematics/ng-add",
     "build:lib": "ng build angular-calendar --prod",
     "build:date-adapters": "tsc -p tsconfig-date-adapters.json",
@@ -165,11 +165,5 @@
   "sideEffects": [
     "*.css",
     "*.scss"
-  ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e",
-      "pre-commit": "pretty-quick --staged"
-    }
-  }
+  ]
 }

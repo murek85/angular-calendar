@@ -27,14 +27,17 @@ const colors: any = {
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3',
+    third: '#FAE3E3',
   },
   blue: {
     primary: '#1e90ff',
     secondary: '#D1E8FF',
+    third: '#FAE3E3',
   },
   yellow: {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
+    third: '#FAE3E3',
   },
 };
 
@@ -78,8 +81,16 @@ export class DemoComponent {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
+  events: any[] = [
     {
+      eventTimetable: {
+        startTime: subDays(startOfDay(new Date()), 1),
+        endTime: addDays(new Date(), 1),
+        realizationPeriods: [
+          { dateFrom: '2021-01-05', dateTo: '2021-01-08' },
+          { dateFrom: '2021-01-18', dateTo: '2021-01-24' },
+        ],
+      },
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
       title: 'A 3 day event',
@@ -92,31 +103,31 @@ export class DemoComponent {
       },
       draggable: true,
     },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    // },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: colors.blue,
+    //   allDay: true,
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
   ];
 
   activeDayIsOpen: boolean = true;

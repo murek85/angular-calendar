@@ -90,8 +90,14 @@ export interface CalendarMonthViewEventTimesChangedEvent<
               (mwlKeydownEnter)="
                 dayClicked.emit({ day: day, sourceEvent: $event })
               "
-              (highlightDay)="toggleDayHighlight($event.event, true)"
-              (unhighlightDay)="toggleDayHighlight($event.event, false)"
+              (highlightDay)="
+                toggleDayHighlight($event.event, true);
+                togglePeriodsHighlight($event.event, true)
+              "
+              (unhighlightDay)="
+                toggleDayHighlight($event.event, false);
+                togglePeriodsHighlight($event.event, false)
+              "
               mwlDroppable
               dragOverClass="cal-drag-over"
               (drop)="
@@ -394,25 +400,81 @@ export class CalendarMonthViewComponent
   toggleDayHighlight(event: CalendarEvent, isHighlighted: boolean): void {
     this.view.days.forEach((day) => {
       if (isHighlighted && day.events.indexOf(event) > -1) {
+        day.cssClass = 'bg-periods';
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
+        delete day.cssClass;
         delete day.backgroundColor;
       }
     });
   }
 
+  togglePeriodsHighlight(event: any, isHighlighted: boolean): void {
+    this.view.days.forEach((day) => {
+      if (event.eventTimetable.realizationPeriods) {
+        event.eventTimetable.realizationPeriods.forEach((period) => {
+          if (
+            isHighlighted &&
+            moment(day.date).isBetween(
+              moment(period.dateFrom).format('YYYY-MM-DD 00:00:00.000'),
+              moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
+              null,
+              '[]'
+            )
+          ) {
+            if (day.events.indexOf(event) < 0) {
+              day.cssClass = 'bg-periods';
+              day.backgroundColor =
+                (event.color && event.color.third) || '#D1E8FF';
+            }
+          }
+        });
+      }
+    });
+  }
+
   toggleDayEventHighlight(event: any, isHighlighted: boolean): void {
-    this.view.days.forEach(day => {
-      if (isHighlighted && (
+    this.view.days.forEach((day) => {
+      if (
+        isHighlighted &&
         moment(day.date).isBetween(
-          moment(event.eventTimetable.startTime).format('YYYY-MM-DD 00:00:00.000'),
-          moment(event.eventTimetable.endTime).format('YYYY-MM-DD 23:59:59.999'), null, '[]')
-      )) {
+          moment(event.eventTimetable.startTime).format(
+            'YYYY-MM-DD 00:00:00.000'
+          ),
+          moment(event.eventTimetable.endTime).format(
+            'YYYY-MM-DD 23:59:59.999'
+          ),
+          null,
+          '[]'
+        )
+      ) {
+        day.cssClass = 'bg-periods';
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
+        delete day.cssClass;
         delete day.backgroundColor;
+      }
+
+      if (event.eventTimetable.realizationPeriods) {
+        event.eventTimetable.realizationPeriods.forEach((period) => {
+          if (
+            isHighlighted &&
+            moment(day.date).isBetween(
+              moment(period.dateFrom).format('YYYY-MM-DD 00:00:00.000'),
+              moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
+              null,
+              '[]'
+            )
+          ) {
+            if (day.events.indexOf(event) < 0) {
+              day.cssClass = 'bg-periods';
+              day.backgroundColor =
+                (event.color && event.color.third) || '#D1E8FF';
+            }
+          }
+        });
       }
     });
   }
