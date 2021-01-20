@@ -452,7 +452,6 @@ export class CalendarMonthViewComponent
           '[]'
         )
       ) {
-        day.cssClass = 'bg-periods';
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
@@ -471,6 +470,10 @@ export class CalendarMonthViewComponent
               '[]'
             )
           ) {
+            if (day.events.indexOf(event) > -1) {
+              day.cssClass = 'bg-periods';
+            }
+
             if (day.events.indexOf(event) < 0) {
               day.cssClass = 'bg-periods';
               day.backgroundColor =
