@@ -406,11 +406,9 @@ export class CalendarMonthViewComponent
   toggleDayHighlight(event: CalendarEvent, isHighlighted: boolean): void {
     this.view.days.forEach((day) => {
       if (isHighlighted && day.events.indexOf(event) > -1) {
-        day.periods = true;
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
-        delete day.periods;
         delete day.backgroundColor;
       }
     });
@@ -427,13 +425,16 @@ export class CalendarMonthViewComponent
               moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
               null,
               '[]'
-            ) &&
-            day.events.indexOf(event) < 0
+            )
           ) {
             day.periods = true;
-            day.backgroundColor =
-              (event.color && event.color.third) || '#D1E8FF';
+
+            if (day.events.indexOf(event) < 0) {
+              day.backgroundColor =
+                (event.color && event.color.third) || '#D1E8FF';
+            }
           } else {
+            delete day.periods;
           }
         });
       }
@@ -453,14 +454,11 @@ export class CalendarMonthViewComponent
           ),
           null,
           '[]'
-        ) &&
-        day.events.indexOf(event) > -1
+        )
       ) {
-        day.periods = true;
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
-        delete day.periods;
         delete day.backgroundColor;
       }
     });
@@ -477,13 +475,27 @@ export class CalendarMonthViewComponent
               moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
               null,
               '[]'
-            ) &&
-            day.events.indexOf(event) < 0
+            )
           ) {
             day.periods = true;
-            day.backgroundColor =
-              (event.color && event.color.third) || '#D1E8FF';
+
+            if (
+              !moment(day.date).isBetween(
+                moment(event.eventTimetable.startTime).format(
+                  'YYYY-MM-DD 00:00:00.000'
+                ),
+                moment(event.eventTimetable.endTime).format(
+                  'YYYY-MM-DD 23:59:59.999'
+                ),
+                null,
+                '[]'
+              )
+            ) {
+              day.backgroundColor =
+                (event.color && event.color.third) || '#D1E8FF';
+            }
           } else {
+            delete day.periods;
           }
         });
       }
