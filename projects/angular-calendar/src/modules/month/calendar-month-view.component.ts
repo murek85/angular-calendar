@@ -131,8 +131,14 @@ export interface CalendarMonthViewEventTimesChangedEvent<
                 sourceEvent: $event.sourceEvent
               })
             "
-            (highlightDay)="toggleDayEventHighlight($event.event, true)"
-            (unhighlightDay)="toggleDayEventHighlight($event.event, false)"
+            (highlightDay)="
+              toggleDayEventHighlight($event.event, true);
+              togglePeriodsEventHighlight($event.event, true)
+            "
+            (unhighlightDay)="
+              toggleDayEventHighlight($event.event, false);
+              togglePeriodsEventHighlight($event.event, false)
+            "
             mwlDroppable
             dragOverClass="cal-drag-over"
             (drop)="
@@ -400,6 +406,7 @@ export class CalendarMonthViewComponent
   toggleDayHighlight(event: CalendarEvent, isHighlighted: boolean): void {
     this.view.days.forEach((day) => {
       if (isHighlighted && day.events.indexOf(event) > -1) {
+        day.periods = true;
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
@@ -420,17 +427,13 @@ export class CalendarMonthViewComponent
               moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
               null,
               '[]'
-            )
+            ) &&
+            day.events.indexOf(event) < 0
           ) {
-            if (day.events.indexOf(event) > -1) {
-              day.periods = true;
-            }
-
-            if (day.events.indexOf(event) < 0) {
-              day.periods = true;
-              day.backgroundColor =
-                (event.color && event.color.third) || '#D1E8FF';
-            }
+            day.periods = true;
+            day.backgroundColor =
+              (event.color && event.color.third) || '#D1E8FF';
+          } else {
           }
         });
       }
@@ -450,15 +453,21 @@ export class CalendarMonthViewComponent
           ),
           null,
           '[]'
-        )
+        ) &&
+        day.events.indexOf(event) > -1
       ) {
+        day.periods = true;
         day.backgroundColor =
           (event.color && event.color.secondary) || '#D1E8FF';
       } else {
         delete day.periods;
         delete day.backgroundColor;
       }
+    });
+  }
 
+  togglePeriodsEventHighlight(event: any, isHighlighted: boolean): void {
+    this.view.days.forEach((day) => {
       if (event.periods) {
         event.periods.forEach((period) => {
           if (
@@ -468,17 +477,13 @@ export class CalendarMonthViewComponent
               moment(period.dateTo).format('YYYY-MM-DD 23:59:59.999'),
               null,
               '[]'
-            )
+            ) &&
+            day.events.indexOf(event) < 0
           ) {
-            if (day.events.indexOf(event) > -1) {
-              day.periods = true;
-            }
-
-            if (day.events.indexOf(event) < 0) {
-              day.periods = true;
-              day.backgroundColor =
-                (event.color && event.color.third) || '#D1E8FF';
-            }
+            day.periods = true;
+            day.backgroundColor =
+              (event.color && event.color.third) || '#D1E8FF';
+          } else {
           }
         });
       }

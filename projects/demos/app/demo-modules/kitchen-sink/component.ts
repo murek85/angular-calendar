@@ -27,7 +27,7 @@ const colors: any = {
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3',
-    third: '#FAE3E3',
+    third: '#D1E8FF',
   },
   blue: {
     primary: '#1e90ff',
